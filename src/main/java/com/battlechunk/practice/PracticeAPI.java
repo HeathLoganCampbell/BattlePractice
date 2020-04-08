@@ -1,5 +1,6 @@
 package com.battlechunk.practice;
 
+import com.battlechunk.practice.commands.BuildCommands;
 import com.battlechunk.practice.commands.MatchCommands;
 import com.battlechunk.practice.commons.commandframework.CommandFramework;
 import com.battlechunk.practice.commons.level.LevelManager;
@@ -34,6 +35,8 @@ public class PracticeAPI
     private PlayerManager playerManager;
     private LobbyManager lobbyManager;
     private LevelManager<PraticeLevelData> levelManager;
+    private LevelManager<PraticeLevelData> buildLevelManager;
+
     private CommandFramework commandFramework;
 
     public PracticeAPI(JavaPlugin plugin)
@@ -41,10 +44,12 @@ public class PracticeAPI
         this.playerManager = new PlayerManager(plugin);
         this.matchManager = new MatchManager(plugin);
         this.lobbyManager = new LobbyManager(plugin);
-        this.levelManager = new LevelManager<PraticeLevelData>(plugin, "Practice", PraticeLevelData.class, new File("practice" + File.pathSeparator + "active"), false);
+        this.levelManager = new LevelManager<PraticeLevelData>(plugin, "Practice", PraticeLevelData.class, new File("practice" + File.separator + "active"), false);
+        this.buildLevelManager =  new LevelManager<PraticeLevelData>(plugin, "PracticeBuild", PraticeLevelData.class, new File("practice" + File.separator + "build"), true);
 
         this.commandFramework = new CommandFramework(plugin);
         this.commandFramework.registerCommands(new MatchCommands());
+        this.commandFramework.registerCommands(new BuildCommands());
 
         Bukkit.getPluginManager().registerEvents(new DamageListener(this.playerManager, this.matchManager), plugin);
         Bukkit.getPluginManager().registerEvents(new DeathListener(this.playerManager, this.matchManager), plugin);
@@ -54,7 +59,9 @@ public class PracticeAPI
     }
 
 
-    public void createMatch(List<Player> teamOnePlayers, List<Player> teamTwoPlayers, Class<? extends Match> matchClazz) throws IllegalAccessException, InstantiationException, WorldAlreadyExistsException, IOException, NewerFormatException, CorruptedWorldException, UnknownWorldException, WorldInUseException, NoSuchMethodException, InvocationTargetException {
+    public void createMatch(List<Player> teamOnePlayers, List<Player> teamTwoPlayers, Class<? extends Match> matchClazz) throws IllegalAccessException,
+            InstantiationException, WorldAlreadyExistsException, IOException, NewerFormatException, CorruptedWorldException,
+            UnknownWorldException, WorldInUseException, NoSuchMethodException, InvocationTargetException {
         //Load Map hee
         final int finalId = MATCH_ID.getAndAdd(1);
 

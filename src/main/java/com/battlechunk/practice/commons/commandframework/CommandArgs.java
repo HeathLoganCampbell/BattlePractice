@@ -109,5 +109,8 @@ public class CommandArgs {
 	{
 		this.getSender().sendMessage(ChatColor.RED + message);
 	}
-
+	public void message(String message)
+	{
+		this.getSender().sendMessage(ChatColor.GREEN + message);
+	}
 }

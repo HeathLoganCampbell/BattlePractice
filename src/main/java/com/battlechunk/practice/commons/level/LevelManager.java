@@ -18,6 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 /**
  * Load world
@@ -144,6 +145,12 @@ public class LevelManager<T extends LevelData>
     public Level<T> getLevel(String worldName)
     {
         return this.levels.get(worldName.toLowerCase());
+    }
+
+    public Level<T> getLevel(World world)
+    {
+        String levelName = world.getName().split(Pattern.quote(File.separator))[0];
+        return this.levels.get(levelName);
     }
 
     private T loadLevelData(File file, Class<T> levelDataClazz)
