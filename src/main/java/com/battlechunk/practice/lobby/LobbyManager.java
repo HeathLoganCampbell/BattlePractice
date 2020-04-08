@@ -1,7 +1,7 @@
 package com.battlechunk.practice.lobby;
 
 import com.battlechunk.practice.commons.PlayerUtils;
-import com.battlechunk.practice.lobby.listener.SpawnListener;
+import com.battlechunk.practice.lobby.listener.LobbySpawnListener;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -17,13 +17,13 @@ public class LobbyManager
     {
         this.spawn = new Location(Bukkit.getWorlds().get(0), 0, 100, 0);
 
-        Bukkit.getPluginManager().registerEvents(new SpawnListener(this), plugin);
+        Bukkit.getPluginManager().registerEvents(new LobbySpawnListener(this), plugin);
     }
 
     public void toLobby(Player player)
     {
         PlayerUtils.reset(player);
 
-        player.teleport(player);
+        player.teleport(this.getSpawn());
     }
 }

@@ -23,9 +23,18 @@ public class DamageListener implements Listener
         {
             Player player = (Player) e.getEntity();
             PlayerData playerData = playerManager.getPlayerData(player);
+
+            if(playerData == null)
+            {
+                System.out.println(player.getName() + " has no playerdata!!!");
+                player.kickPlayer("Require playerdata");
+                return;
+            }
+
             if(playerData.getMatchId() == -1)
             {
                 //Not in a match
+                System.out.println(player.getName() + " is not in a match");
                 e.setCancelled(true);
                 return;
             }
@@ -34,7 +43,7 @@ public class DamageListener implements Listener
             if(match == null)
             {
                 e.setCancelled(true);
-                System.out.println("Could not find Match " + match.getId() + " for " + player.getName() + " in DamageListener:onDamage");
+                System.out.println("Could not find Match " + playerData.getMatchId() + " for " + player.getName() + " in DamageListener:onDamage");
                 return;
             }
 

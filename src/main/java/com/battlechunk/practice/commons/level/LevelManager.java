@@ -42,6 +42,7 @@ public class LevelManager<T extends LevelData>
         this.levelDataClazz = levelDataClazz;
 
         this.activeWorlds = activeWorlds;
+        this.saveToMap = saveToMap;
 
         if(saveToMap)
             this.levels = new HashMap<>();

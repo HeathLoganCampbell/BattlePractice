@@ -5,6 +5,8 @@ import com.battlechunk.practice.commons.commandframework.CommandFramework;
 import com.battlechunk.practice.commons.level.LevelManager;
 import com.battlechunk.practice.commons.level.data.Level;
 import com.battlechunk.practice.level.PraticeLevelData;
+import com.battlechunk.practice.listeners.DamageListener;
+import com.battlechunk.practice.listeners.DeathListener;
 import com.battlechunk.practice.lobby.LobbyManager;
 import com.battlechunk.practice.match.Match;
 import com.battlechunk.practice.match.MatchManager;
@@ -12,6 +14,7 @@ import com.battlechunk.practice.match.Team;
 import com.battlechunk.practice.playerdata.PlayerManager;
 import com.grinderwolf.swm.api.exceptions.*;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -43,6 +46,10 @@ public class PracticeAPI
         this.commandFramework = new CommandFramework(plugin);
         this.commandFramework.registerCommands(new MatchCommands());
 
+        Bukkit.getPluginManager().registerEvents(new DamageListener(this.playerManager, this.matchManager), plugin);
+        Bukkit.getPluginManager().registerEvents(new DeathListener(this.playerManager, this.matchManager), plugin);
+
+
         practiceAPI = this;
     }
 
@@ -53,7 +60,7 @@ public class PracticeAPI
 
         Level<PraticeLevelData> level = this.levelManager.load("example "  + finalId);
 
-        Match match = matchClazz.getConstructor(Integer.class).newInstance(finalId);
+        Match match = matchClazz.getConstructor(int.class).newInstance(finalId);
         Team teamOne = match.getTeamOne();
         Team teamTwo = match.getTeamTwo();
 

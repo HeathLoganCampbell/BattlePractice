@@ -10,11 +10,14 @@ import com.battlechunk.practice.playerdata.PlayerData;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
@@ -126,6 +129,25 @@ public class Match
         playerData.setMatchId(PlayerData.NO_MATCH);
     }
 
+    public void setLoser(Team winnerTeam)
+    {
+        if(winnerTeam == teamOne)
+        {
+            this.winnerTeam = teamTwo;
+            this.loserTeam = teamOne;
+        }
+        else if(winnerTeam == teamTwo)
+        {
+            this.winnerTeam = teamOne;
+            this.loserTeam = teamTwo;
+        }
+        else
+        {
+            //Draw?? tf? how?
+        }
+        this.done = true;
+    }
+
     public void setWinner(Team winnerTeam)
     {
         if(winnerTeam != teamOne)
@@ -224,10 +246,23 @@ public class Match
         this.state = state;
     }
 
+    private int spawnId = 0;
     protected void onSpawn(Player player)
     {
         Bukkit.broadcastMessage("onSpawn");
         PlayerUtils.reset(player);
+
+        World world = this.getLevel().getWorld();
+        ArrayList<Location> spawns = this.getLevel().getLevelData().getSpawn();
+        Location location = world.getSpawnLocation();
+
+        if(spawns != null && spawns.size() != 0)
+        {
+            location = spawns.get(spawnId++ % spawns.size());
+            location.setWorld(world);
+        }
+
+        player.teleport(location);
     }
 
     protected void onEquipt(Player player)

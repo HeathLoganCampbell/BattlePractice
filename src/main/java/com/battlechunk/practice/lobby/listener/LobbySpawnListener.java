@@ -10,15 +10,13 @@ import org.bukkit.event.player.PlayerRespawnEvent;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
 @AllArgsConstructor
-public class SpawnListener implements Listener
+public class LobbySpawnListener implements Listener
 {
     private LobbyManager lobbyManager;
 
     @EventHandler
     public void onJoinSpawn(PlayerSpawnLocationEvent e)
     {
-        Player player = e.getPlayer();
-        PlayerUtils.reset(player);
         e.setSpawnLocation(lobbyManager.getSpawn());
     }
 

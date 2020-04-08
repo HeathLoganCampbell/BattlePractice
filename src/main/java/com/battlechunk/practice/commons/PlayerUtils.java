@@ -7,6 +7,7 @@ public class PlayerUtils
 {
     public static void reset(Player player)
     {
+        if(player == null) return;
         player.closeInventory();
         player.getInventory().clear();
         player.getInventory().setArmorContents(new ItemStack[4]);

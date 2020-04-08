@@ -35,10 +35,10 @@ public class DeathListener implements Listener
                 int teamId = playerData.getTeamId();
                 Team team = match.getTeamById(teamId);
 
-                match.setWinner(team);
+                match.setLoser(team);
                 match.update();
 
-
+                e.setCancelled(true);
                 player.getWorld().strikeLightningEffect(player.getLocation());
             }
         }
