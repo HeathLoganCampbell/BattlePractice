@@ -4,9 +4,12 @@ import com.battlechunk.practice.PracticeAPI;
 import com.battlechunk.practice.commons.commandframework.Command;
 import com.battlechunk.practice.commons.commandframework.CommandArgs;
 import com.battlechunk.practice.match.matchtypes.BuildUHC;
+import com.grinderwolf.swm.api.exceptions.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 
 public class MatchCommands
@@ -25,7 +28,9 @@ public class MatchCommands
 
         try {
             PracticeAPI.get().createMatch(Arrays.asList(targetPlayer), Arrays.asList(args.getPlayer()), BuildUHC.class);
-        } catch (IllegalAccessException | InstantiationException e) {
+        } catch (IllegalAccessException | InstantiationException | WorldAlreadyExistsException |
+                IOException | NewerFormatException | CorruptedWorldException | UnknownWorldException |
+                WorldInUseException | NoSuchMethodException | InvocationTargetException e) {
             args.error("Something went very wrong while setting up match...");
             e.printStackTrace();
         }

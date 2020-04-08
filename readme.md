@@ -7,3 +7,6 @@
 * In memory worlds
 * World per Match
 * Build tools
+
+# Levels
+A level is basically a world

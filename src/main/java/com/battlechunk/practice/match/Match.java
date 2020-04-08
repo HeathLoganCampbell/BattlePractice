@@ -4,6 +4,8 @@ package com.battlechunk.practice.match;
 import com.battlechunk.practice.PracticeAPI;
 import com.battlechunk.practice.PracticePlugin;
 import com.battlechunk.practice.commons.PlayerUtils;
+import com.battlechunk.practice.commons.level.data.Level;
+import com.battlechunk.practice.level.PraticeLevelData;
 import com.battlechunk.practice.playerdata.PlayerData;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,7 +37,7 @@ import java.util.function.Consumer;
 @Setter
 public class Match
 {
-
+    private Level<PraticeLevelData> level;
     private int id = 0;
     private String displayName;
     //A team can contain 1 to many players
@@ -59,8 +61,9 @@ public class Match
     public boolean mapDestruction = false;
     // END Match Options
 
-    public Match(String displayName)
+    public Match(int id, String displayName)
     {
+        this.id = id;
         this.displayName = displayName;
 
         this.teamOne = new Team("One" , 1);
