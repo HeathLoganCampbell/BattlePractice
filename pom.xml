@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>Prat</artifactId>
+    <groupId>com.battlechunk</groupId>
+    <artifactId>Practice</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -15,7 +15,6 @@
         <plugins.version>1.0</plugins.version>
 
         <spiogt.version>1.8.8-R0.1-SNAPSHOT</spiogt.version>
-        <build.number>NON-JENKINS-BUILD</build.number>
     </properties>
 
     <dependencies>
@@ -101,10 +100,9 @@
 
                         </manifest>
                         <manifestEntries>
-                            <Built-by>MCBut / Sprock</Built-by>
+                            <Built-by>BattleChunk / Sprock</Built-by>
                             <Specification-Title>${project.name}</Specification-Title>
                             <Specification-Version>${project.version}</Specification-Version>
-                            <Implementation-Version>${build.number}</Implementation-Version>
                         </manifestEntries>
                     </archive>
                 </configuration>
