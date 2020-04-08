@@ -1,0 +1,4 @@
+name: BattlePractice
+main: com.battlechunk.practice.PracticePlugin
+version: v1.0
+authors: [Sprock]
