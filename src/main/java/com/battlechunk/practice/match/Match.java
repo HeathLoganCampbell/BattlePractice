@@ -220,16 +220,19 @@ public class Match
 
     public void setState(MatchState state)
     {
+        Bukkit.broadcastMessage(" } " + this.state + " -> " + state);
         this.state = state;
     }
 
     protected void onSpawn(Player player)
     {
+        Bukkit.broadcastMessage("onSpawn");
         PlayerUtils.reset(player);
     }
 
     protected void onEquipt(Player player)
     {
+        Bukkit.broadcastMessage("onEquipt");
         player.getInventory().setItem(0, new ItemStack(Material.STONE_SWORD));
     }
 
@@ -243,7 +246,7 @@ public class Match
 
     protected void onStart()
     {
-
+        Bukkit.broadcastMessage("onStart");
     }
 
     protected boolean isDone()
@@ -253,11 +256,12 @@ public class Match
 
     protected void onEnd()
     {
-        this.setState(MatchState.CHAMPION);
+        Bukkit.broadcastMessage("onEnd");
     }
 
     public void onChampion()
     {
+        Bukkit.broadcastMessage("onChampion");
         if(this.winnerTeam == null)
         {
             this.broadcast("No one Won");

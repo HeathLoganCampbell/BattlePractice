@@ -59,7 +59,6 @@ public class PracticeAPI
 
         match.setLevel(level);
 
-
         for (Player teamPlayer : teamOnePlayers) {
             match.addPlayer(teamOne, teamPlayer);
         }
@@ -68,7 +67,6 @@ public class PracticeAPI
             match.addPlayer(teamTwo, teamPlayer);
         }
 
-
         this.matchManager.registerMatch(match);
     }
 
@@ -76,11 +74,4 @@ public class PracticeAPI
     {
         return practiceAPI;
     }
-
-    //Map map = PracticeAPI.getMap("Flat Flight");
-    //Match match = map.launchMatch(UHCBuildMatch.class);
-        //Generates world
-        //Teleports players to spawns
-        //Start fight
-    //match.addMatchEndHook((result) -> { result.getPlayers().foreach(player ->  player.sendMessage("Game Over")); });
 }
