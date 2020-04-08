@@ -1,5 +1,6 @@
 package com.battlechunk.practice.listeners;
 
+import com.battlechunk.practice.commons.PlayerUtils;
 import com.battlechunk.practice.match.Match;
 import com.battlechunk.practice.match.MatchManager;
 import com.battlechunk.practice.match.Team;
@@ -33,8 +34,10 @@ public class DeathListener implements Listener
                 Match match = this.matchManager.getMatch(matchId);
                 int teamId = playerData.getTeamId();
                 Team team = match.getTeamById(teamId);
+
                 match.setWinner(team);
                 match.update();
+
 
                 player.getWorld().strikeLightningEffect(player.getLocation());
             }

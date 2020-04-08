@@ -10,3 +10,8 @@
 
 # Levels
 A level is basically a world
+
+# Requires
+* Java 8
+* SlimeWorldManager
+* Spigot 1.8
