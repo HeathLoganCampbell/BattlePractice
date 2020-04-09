@@ -67,7 +67,6 @@ public class PracticeAPI
         //Load Map hee
         final int finalId = MATCH_ID.getAndAdd(1);
 
-
         String currentLevelName = null;
         //Search build for map of mapName
         String[] list = this.buildLevelManager.list();

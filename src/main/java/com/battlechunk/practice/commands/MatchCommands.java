@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class MatchCommands
 {
@@ -26,8 +27,20 @@ public class MatchCommands
             return;
         }
 
+        String mapName = null;
+        if(args.length() == 2)
+        {
+            mapName = args.getArgs(1);
+        }
+
+        if(targetPlayer == args.getPlayer())
+        {
+            args.error("You can't battle yourself");
+            return;
+        }
+
         try {
-            PracticeAPI.get().createMatch(Arrays.asList(targetPlayer), Arrays.asList(args.getPlayer()), BuildUHC.class);
+            PracticeAPI.get().createMatch(Collections.singletonList(targetPlayer), Collections.singletonList(args.getPlayer()), BuildUHC.class, mapName);
         } catch (IllegalAccessException | InstantiationException | WorldAlreadyExistsException |
                 IOException | NewerFormatException | CorruptedWorldException | UnknownWorldException |
                 WorldInUseException | NoSuchMethodException | InvocationTargetException e) {
