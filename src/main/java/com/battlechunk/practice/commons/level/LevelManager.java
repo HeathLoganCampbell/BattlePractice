@@ -177,4 +177,15 @@ public class LevelManager<T extends LevelData>
             e.printStackTrace();
         }
     }
+
+    public T quickLoadLevelData(String levelName)
+    {
+        T levelData = this.loadLevelData(new File(this.activeWorlds, levelName), this.levelDataClazz);
+        return levelData;
+    }
+
+    public String[] list()
+    {
+        return this.activeWorlds.list();
+    }
 }

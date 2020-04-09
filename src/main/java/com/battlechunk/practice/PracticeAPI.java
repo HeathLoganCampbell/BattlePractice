@@ -2,6 +2,8 @@ package com.battlechunk.practice;
 
 import com.battlechunk.practice.commands.BuildCommands;
 import com.battlechunk.practice.commands.MatchCommands;
+import com.battlechunk.practice.commons.FileUtils;
+import com.battlechunk.practice.commons.MathUtils;
 import com.battlechunk.practice.commons.commandframework.CommandFramework;
 import com.battlechunk.practice.commons.level.LevelManager;
 import com.battlechunk.practice.commons.level.data.Level;
@@ -59,13 +61,43 @@ public class PracticeAPI
     }
 
 
-    public void createMatch(List<Player> teamOnePlayers, List<Player> teamTwoPlayers, Class<? extends Match> matchClazz) throws IllegalAccessException,
+    public void createMatch(List<Player> teamOnePlayers, List<Player> teamTwoPlayers, Class<? extends Match> matchClazz, String mapName) throws IllegalAccessException,
             InstantiationException, WorldAlreadyExistsException, IOException, NewerFormatException, CorruptedWorldException,
             UnknownWorldException, WorldInUseException, NoSuchMethodException, InvocationTargetException {
         //Load Map hee
         final int finalId = MATCH_ID.getAndAdd(1);
 
-        Level<PraticeLevelData> level = this.levelManager.load("example "  + finalId);
+
+        String currentLevelName = null;
+        //Search build for map of mapName
+        String[] list = this.buildLevelManager.list();
+        if(mapName != null)
+        {
+            for (String levelName : list)
+            {
+                if(levelName.equalsIgnoreCase(mapName))
+                {
+//                    if(!this.buildLevelManager.quickLoadLevelData(levelName).isBuildMode())
+                    {
+                        currentLevelName = levelName;
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        if(currentLevelName == null)
+        {
+            //Pick a random world
+            currentLevelName = list[MathUtils.r(list.length)];
+        }
+
+        //Copy from build
+        String matchName = currentLevelName + " " + finalId;
+        FileUtils.copyFolder(this.buildLevelManager.getLevelFolder(currentLevelName), this.levelManager.getLevelFolder(matchName));
+
+        Level<PraticeLevelData> level = this.levelManager.load(matchName);
 
         Match match = matchClazz.getConstructor(int.class).newInstance(finalId);
         Team teamOne = match.getTeamOne();
