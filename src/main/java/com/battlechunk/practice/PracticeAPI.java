@@ -24,6 +24,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -77,6 +78,7 @@ public class PracticeAPI
                 if(levelName.equalsIgnoreCase(mapName))
                 {
 //                    if(!this.buildLevelManager.quickLoadLevelData(levelName).isBuildMode())
+                    if(this.buildLevelManager.getLevelFolder(mapName).isDirectory())
                     {
                         currentLevelName = levelName;
                         break;
@@ -95,6 +97,10 @@ public class PracticeAPI
         //Copy from build
         String matchName = currentLevelName + " " + finalId;
         FileUtils.copyFolder(this.buildLevelManager.getLevelFolder(currentLevelName), this.levelManager.getLevelFolder(matchName));
+        File file = new File(this.levelManager.getLevelFolder(matchName), currentLevelName + ".slime");
+        File newFile = new File(this.levelManager.getLevelFolder(matchName), matchName + ".slime");
+        file.renameTo(newFile);
+
 
         Level<PraticeLevelData> level = this.levelManager.load(matchName);
 
