@@ -128,7 +128,7 @@ public class BuildCommands
         level.getLevelData().addSpawn(player.getLocation());
 
         PracticeAPI.get().getBuildLevelManager().save(level);
-        args.message(level.getLevelData().getWorldName() + " Add spawn");
+        args.message(level.getLevelData().getWorldName() + " Add spawn ( " + level.getLevelData().getSpawn().size() + " Spawns )" );
     }
 
     @Command(name = "build.spawn.list", inGameOnly = true)
