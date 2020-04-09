@@ -94,7 +94,7 @@ public class PracticeAPI
             currentLevelName = list[MathUtils.r(list.length)];
         }
 
-        //Copy from build
+        //Copy from build to  active
         String matchName = currentLevelName + " " + finalId;
         FileUtils.copyFolder(this.buildLevelManager.getLevelFolder(currentLevelName), this.levelManager.getLevelFolder(matchName));
         File file = new File(this.levelManager.getLevelFolder(matchName), currentLevelName + ".slime");

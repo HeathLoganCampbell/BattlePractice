@@ -1,9 +1,11 @@
 package com.battlechunk.practice.match;
 
+import com.battlechunk.practice.commons.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -63,6 +65,15 @@ public class MatchManager
             match.update();
         }
 
-        this.getAllMatches().removeIf(match -> match.getValue().getState() == MatchState.REMOVING);
+        final Iterator<Map.Entry<Integer, Match>> each = this.getAllMatches().iterator();
+        while (each.hasNext()) {
+            Match match = each.next().getValue();
+            if (match.getState() == MatchState.REMOVING) {
+                FileUtils.deleteDirectory(match.getLevel().getFolder());
+                match.destroy();
+                each.remove();
+            }
+        }
+
     }
 }

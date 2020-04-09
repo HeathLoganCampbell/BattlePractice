@@ -312,6 +312,8 @@ public class Match
         this.teamOne = null;
         this.teamTwo = null;
 
+        this.level = null;
+
         this.winnerTeam = null;
         this.loserTeam = null;
     }
