@@ -113,24 +113,25 @@ public class LevelManager<T extends LevelData>
 
     public void save(String worldName)
     {
-        Level level = this.getLevel(worldName);
+        Level<T> level = this.getLevel(worldName);
         if(level == null) return;
         save(level);
     }
 
-    public void save(Level level)
+    public void save(Level<T> level)
     {
         level.getWorld().save();
+        this.saveLevelData(new File(level.getFolder(), "level-data.json"), level.getLevelData());
     }
 
     public void unload(String worldName)
     {
-        Level level = this.getLevel(worldName);
+        Level<T> level = this.getLevel(worldName);
         if(level == null) return;
         this.unload(level);
     }
 
-    public void unload(Level level)
+    public void unload(Level<T> level)
     {
         String name = level.getLevelData().getWorldName();
         World world = level.getWorld();

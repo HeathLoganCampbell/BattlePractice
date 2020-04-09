@@ -1,11 +1,16 @@
 package com.battlechunk.practice.commands;
 
 import com.battlechunk.practice.PracticeAPI;
+import com.battlechunk.practice.commons.CC;
 import com.battlechunk.practice.commons.commandframework.Command;
 import com.battlechunk.practice.commons.commandframework.CommandArgs;
 import com.battlechunk.practice.commons.level.data.Level;
 import com.battlechunk.practice.level.PraticeLevelData;
 import com.grinderwolf.swm.api.exceptions.*;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -13,6 +18,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BuildCommands
 {
@@ -104,5 +110,76 @@ public class BuildCommands
 
         PracticeAPI.get().getBuildLevelManager().unload(level);
         args.message(level.getLevelData().getWorldName() + " has been unloaded");
+    }
+
+
+    @Command(name = "build.spawn.add", inGameOnly = true)
+    public void onSpawnAdd(CommandArgs args)
+    {
+        Player player = args.getPlayer();
+        Level<PraticeLevelData> level = PracticeAPI.get().getBuildLevelManager().getLevel(args.getPlayer().getWorld());
+
+        if(level == null)
+        {
+            args.error("Failure to load level");
+            return;
+        }
+
+        level.getLevelData().addSpawn(player.getLocation());
+
+        PracticeAPI.get().getBuildLevelManager().save(level);
+        args.message(level.getLevelData().getWorldName() + " Add spawn");
+    }
+
+    @Command(name = "build.spawn.list", inGameOnly = true)
+    public void onSpawnList(CommandArgs args)
+    {
+        Player player = args.getPlayer();
+        World world = args.getPlayer().getWorld();
+        Level<PraticeLevelData> level = PracticeAPI.get().getBuildLevelManager().getLevel(world);
+
+        if(level == null)
+        {
+            args.error("Failure to load level");
+            return;
+        }
+
+        args.message(level.getLevelData().getWorldName() + " ]======-----");
+        ArrayList<Location> spawn = level.getLevelData().getSpawn();
+        for (int i = 0; i < spawn.size(); i++) {
+            Location location = level.getLevelData().getSpawn(i, world);
+            TextComponent message = new TextComponent(CC.green  + "#" + i + CC.gray  + " [ Click Me to Teleport ]" );
+            message.setHoverEvent(new HoverEvent( HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Click to teleport to spawn").create() ) );
+            message.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/build spawn tp " + i));
+            args.getPlayer().spigot().sendMessage(message);
+        }
+
+    }
+
+    @Command(name = "build.spawn.tp", inGameOnly = true)
+    public void onSpawnTP(CommandArgs args)
+    {
+        Player player = args.getPlayer();
+        Level<PraticeLevelData> level = PracticeAPI.get().getBuildLevelManager().getLevel(args.getPlayer().getWorld());
+
+        if(level == null)
+        {
+            args.error("Failure to load level");
+            return;
+        }
+
+        if(args.length() != 1)
+        {
+            args.error("Please use /build spawn goto <Id>");
+            return;
+        }
+
+        String idStr = args.getArgs(0);
+        int id = Integer.parseInt(idStr);
+
+        Location location = level.getLevelData().getSpawn().get(id);
+
+        player.teleport(location);
+        args.message(level.getLevelData().getWorldName() + " Telported to spawn " + id);
     }
 }
