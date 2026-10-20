@@ -1,8 +1,8 @@
 # BattlePractice
-1 v 1 players  in a high frame per second enviroment
+1v1 players in a high frames-per-second environment
 
 # Features & Things to come
-* Duel players in a fair enviroment
+* Duel players in a fair environment
 * Slime World format
 * In memory worlds
 * World per Match
